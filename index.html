@@ -19,6 +19,30 @@
 </head>
 
 <body>
+    <div class="welcome-overlay" id="welcomeOverlay">
+        <div class="welcome-card">
+            <div class="welcome-photo">
+                <img src="./images/annu1.jpg" alt="Anushka Welcome Photo">
+            </div>
+            <div class="welcome-text">
+                <h1>Happy Birthday Anushuska</h1>
+                <p>25-05-2006</p>
+                <button class="welcome-btn" id="welcomeButton">Welcome</button>
+            </div>
+        </div>
+    </div>
+    <div class="intro-overlay" id="introOverlay">
+        <div class="intro-card">
+            <div class="intro-photo">
+                <img src="./images/annu1.jpg" alt="Birthday Photo 1">
+            </div>
+            <div class="intro-photo">
+                <img src="./images/p2.jpg" alt="Birthday Photo 2">
+            </div>
+            <div class="intro-text">Happy Birthday Anushka</div>
+        </div>
+    </div>
+    <audio id="welcomeAudio" src="images/annu.mp3" preload="auto"></audio>
     <div id="wrapper">
         <div class="flag__birthday">
             <img src="./images/1.png" alt="" width="350" class="flag__left">
@@ -422,6 +446,10 @@ Happy Birthday`;
     let surpriseVideo = document.getElementById('surpriseVideo')
     let closeVideo = document.getElementById('closeVideo')
     let closeNotebook = document.getElementById('closeNotebook')
+    let welcomeButton = document.getElementById('welcomeButton')
+    let welcomeOverlay = document.getElementById('welcomeOverlay')
+    let welcomeAudio = document.getElementById('welcomeAudio')
+    let wrapper = document.getElementById('wrapper')
     let notebookPagesContainer = document.querySelector('.notebook-pages')
     let currentPageIndex = 0
     let activeSurprise = null
@@ -535,9 +563,15 @@ Happy Birthday`;
         surpriseVideo.pause()
         surpriseVideo.currentTime = 0
         surpriseVideo.src = ''
+        if (welcomeAudio) {
+            welcomeAudio.pause()
+        }
     })
 
     function playVideo(src) {
+        if (welcomeAudio) {
+            welcomeAudio.pause()
+        }
         surpriseVideo.src = src
         surpriseVideo.load()
         videoOverlay.classList.add('active')
@@ -551,6 +585,21 @@ Happy Birthday`;
             boxmail.classList.add('active')
             currentPageIndex = 0
             showNotebookPage(currentPageIndex)
+        })
+    }
+
+    if (welcomeButton) {
+        welcomeButton.addEventListener('click', () => {
+            if (welcomeOverlay) {
+                welcomeOverlay.style.display = 'none'
+            }
+            if (wrapper) {
+                wrapper.style.display = 'block'
+            }
+            if (welcomeAudio) {
+                welcomeAudio.currentTime = 0
+                welcomeAudio.play().catch(() => {})
+            }
         })
     }
 
